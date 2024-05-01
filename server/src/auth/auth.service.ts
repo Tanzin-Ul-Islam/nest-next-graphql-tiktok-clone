@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
+import { LoginDto } from './dto/auth.dto';
 @Injectable()
 export class AuthService {
     constructor(
@@ -29,18 +30,49 @@ export class AuthService {
         const userExist = await this.prisma.user.findUnique({
             where: { id: payload.sub }
         })
-        if(!userExist){
+        if (!userExist) {
             throw new BadRequestException('User no longer exists');
         }
         const expireIn = 15000;
-        const expiration = Math.floor(Date.now()/1000) + expireIn;
+        const expiration = Math.floor(Date.now() / 1000) + expireIn;
         const accessToken = this.jwtService.sign(
-            {...payload, exp: expiration},
+            { ...payload, exp: expiration },
             {
                 secret: this.configService.get<string>('ACCESS_TOKEN_SECRET')
             }
         )
-        res.cookie('access_token', accessToken, {httpOnly: true});
+        res.cookie('access_token', accessToken, { httpOnly: true });
         return accessToken;
+    }
+
+    private async issueTokens(user: User, res: Response) {
+        const payload = { username: user.fullname, sub: user.id };
+        const accessToken = this.jwtService.sign(
+            { ...payload },
+            {
+                secret: this.configService.get<string>('ACCESS_TOKEN_SECRET'),
+                expiresIn: '150sec',
+            }
+        )
+        const refreshToken = this.jwtService.sign(
+            { ...payload },
+            {
+                secret: this.configService.get<string>('REFRESH_TOKEN_SECRET'),
+                expiresIn: '7d',
+            }
+        )
+        res.cookie('access_token', accessToken, { httpOnly: true });
+        res.cookie('refresh_token', refreshToken, { httpOnly: true });
+        return { user }
+    }
+
+    async validateUser(loginDto: LoginDto) {
+        const user = await this.prisma.user.findUnique({
+            where: { email: loginDto.email }
+        })
+        if (user && (await bcrypt.compareSync(loginDto.password, user.password))) {
+            return user;
+        }
+        return null;
     }
 }
