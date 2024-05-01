@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "../prisma.service";
-import * as bcrypt from 'bcrypt';
 import { User } from '@prisma/client';
 import { ConfigService } from '@nestjs/config';
 import { Request, Response } from 'express';
-import { LoginDto } from './dto/auth.dto';
+import { LoginDto, RegisterDto } from './dto/auth.dto';
+import { compareHash, hashPassword } from 'src/utils/bcrypt.utils';
 @Injectable()
 export class AuthService {
     constructor(
@@ -70,9 +70,41 @@ export class AuthService {
         const user = await this.prisma.user.findUnique({
             where: { email: loginDto.email }
         })
-        if (user && (await bcrypt.compareSync(loginDto.password, user.password))) {
+        if (user && (await compareHash(loginDto.password, user.password))) {
             return user;
         }
         return null;
+    }
+
+    async register(registerDto: RegisterDto, res: Response){
+        const existingUser = await this.prisma.user.findUnique({
+            where: {email: registerDto.email}
+        })
+        if(existingUser){
+            throw new Error("Email already in use.")
+        }
+        const hashedPassword = await hashPassword(registerDto.password);
+        const user = await this.prisma.user.create({
+            data: {
+                fullname: registerDto.fullname,
+                password: registerDto.password,
+                email: registerDto.email,
+            }
+        })
+        return this.issueTokens(user, res);
+    }
+
+    async login(loginDto: LoginDto, res: Response){
+        const user = await this.validateUser(loginDto);
+        if(!user){
+            throw new UnauthorizedException('Invalid credentials.')
+        }
+        return this.issueTokens(user, res)
+    }
+
+    async logout(res: Response){
+        res.clearCookie('access_token');
+        res.clearCookie('refresh_token');
+        return 'Successfully logged out';
     }
 }
