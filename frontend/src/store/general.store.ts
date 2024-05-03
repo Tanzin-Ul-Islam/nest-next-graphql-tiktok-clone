@@ -6,13 +6,39 @@ export interface GeneralState {
     isEditProfileOpen: boolean
     selectedPosts: null
     ids: null
+    isBackUrl: "/"
     posts: null
+    suggested: null
 }
 
-// export interface GeneralActions {
-//     setisLoginOpen(:)
-//     setisEditProfileOpen(:)
-//     setselectedPosts(:)
-//     setids(:)
-//     setposts(:)
-// }
+export interface GeneralActions {
+    setLoginIsOpen: (isLoginOpen: boolean) => void
+    setIsEditProfileOpen: () => void
+  }
+
+export const useGeneralStore = create<GeneralState & GeneralActions>()(
+    devtools(
+        persist(
+            (set) => ({
+                isLoginOpen: false,
+                isEditProfileOpen: false,
+                selectedPosts: null,
+                ids: null,
+                isBackUrl: "/",
+                posts: null,
+                suggested: null,
+                setLoginIsOpen: (isLoginOpen: boolean) => {
+                    set({ isLoginOpen })
+                },
+                setIsEditProfileOpen: () => {
+                    return set((state) => ({
+                        isEditProfileOpen: !state.isEditProfileOpen,
+                    }))
+                },
+            }),
+            {
+                name: "general-storage"
+            }
+        )
+    )
+)
