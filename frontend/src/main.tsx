@@ -6,22 +6,23 @@ import Feed from './pages/Feed.tsx'
 import Upload from './pages/Upload.tsx'
 import Profile from './pages/Profile.tsx'
 import Post from './pages/Post.tsx'
+import ProtectedRoutes from './components/ProtectedRoutes.tsx'
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Feed />
+    element: <ProtectedRoutes><Feed /></ProtectedRoutes>
   },
   {
     path: "/upload",
-    element: <Upload />
+    element: <ProtectedRoutes><Upload /></ProtectedRoutes>
   },
   {
     path: "/post",
-    element: <Post />
+    element: <ProtectedRoutes><Post /></ProtectedRoutes>
   },
   {
     path: "/profile",
-    element: <Profile />
+    element: <ProtectedRoutes><Profile /></ProtectedRoutes>
   },
 ])
 ReactDOM.createRoot(document.getElementById('root')!).render(

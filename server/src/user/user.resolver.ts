@@ -10,7 +10,7 @@ import { Request, Response } from 'express';
 export class UserResolver {
     constructor(
         private readonly authService: AuthService,
-        private readonly userService: UserService
+        private readonly userService: UserService,
     ) { }
 
     @Mutation(() => RegisterResponse)
@@ -46,19 +46,22 @@ export class UserResolver {
         return this.authService.login(loginDto, Context.res)
     }
 
-    @Mutation(() => LoginResponse)
-    async logout(
-        @Context() Context: { res: Response }
-    ) {
-        return this.authService.logout(Context.res)
+    @Mutation(() => String)
+    async logout(@Context() context: { res: Response }) {
+      return this.authService.logout(context.res);
     }
 
-    @Mutation(()=>String)
-    async refreshToken(@Context() Context: {req: Request, res: Response}){
-        try{
+    @Mutation(() => String)
+    async refreshToken(@Context() Context: { req: Request, res: Response }) {
+        try {
             return this.authService.refreshToken(Context.req, Context.res)
-        }catch(error){
+        } catch (error) {
             throw new BadRequestException(error.message);
         }
+    }
+
+    @Query(() => String)
+    async hello() {
+        return "Hello"
     }
 }
