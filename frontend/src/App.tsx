@@ -1,7 +1,9 @@
+import AuthModal from "./modals/AuthModal"
+
 function App() {
   return (
-    <div className="bg-red-500">
-      Hello
+    <div>
+      <AuthModal />
     </div>
   )
 }

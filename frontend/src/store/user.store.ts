@@ -39,7 +39,7 @@ export const useUserStore = create<User & UserActions>()(
 
             }),
             {
-                name: "general-storage"
+                name: "user-storage"
             }
         )
     )
