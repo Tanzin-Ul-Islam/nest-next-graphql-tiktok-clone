@@ -6,8 +6,7 @@ import {
     Observable,
     ApolloLink,
 } from "@apollo/client"
-
-import { createUploadLink } from "apollo-upload-client"
+import createUploadLink from "apollo-upload-client/createUploadLink.mjs";
 import { onError } from "@apollo/client/link/error"
 
 async function refreshToken(client: ApolloClient<NormalizedCacheObject>) {

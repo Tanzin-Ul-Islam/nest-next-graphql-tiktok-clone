@@ -16,9 +16,9 @@ export default function AuthModal() {
                     </button>
                 </div>
                 {isRegistered ? <Login /> : <Register />}
-                <div className='absolute flex items-center justify-center py-5 left-0 bottom-0 bottom-0 border-t w-full'>
+                <div className='absolute flex items-center justify-center py-5 left-0 bottom-0 border-t w-full'>
                     <span className='text-[14px] text-gray-600'>
-                        Don't have an account?
+                        {`${isRegistered ? 'Do not have an account?' : 'Already have an account?'}`}
                     </span>
                     <button className='text-[14px] text-red-500 font-semibold pl-1' onClick={() => setIsRegistered(!isRegistered)}>
                         {isRegistered ? <span>Sign Up</span> : <span>Log in</span>}

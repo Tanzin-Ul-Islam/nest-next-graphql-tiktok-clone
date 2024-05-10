@@ -6,7 +6,9 @@ import Feed from './pages/Feed.tsx'
 import Upload from './pages/Upload.tsx'
 import Profile from './pages/Profile.tsx'
 import Post from './pages/Post.tsx'
-import ProtectedRoutes from './components/ProtectedRoutes.tsx'
+import ProtectedRoutes from './components/ProtectedRoutes.tsx';
+import { ApolloProvider } from "@apollo/client"
+import { client } from './utils/apolloClient.ts'
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,7 +29,9 @@ const router = createBrowserRouter([
 ])
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
-    <RouterProvider router={router} />
-    <App />
+    <ApolloProvider client={client}>
+      <RouterProvider router={router} />
+      <App />
+    </ApolloProvider>
   </>
 )
