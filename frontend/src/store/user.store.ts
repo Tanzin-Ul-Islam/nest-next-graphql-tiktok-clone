@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
 
 export interface User {
-    id?: boolean
+    id?: any
     fullname: string
     email: string
     bio: string

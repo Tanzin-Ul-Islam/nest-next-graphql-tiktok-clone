@@ -3,9 +3,11 @@ import { AuthService } from 'src/auth/auth.service';
 import { UserService } from './user.service';
 import { LoginResponse, RegisterResponse } from 'src/auth/dto/response.dto';
 import { LoginDto, RegisterDto } from 'src/auth/dto/auth.dto';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, UseFilters } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { GraphQLErrorFilter } from 'src/filters/custom-exception.filter';
 
+@UseFilters(GraphQLErrorFilter)
 @Resolver()
 export class UserResolver {
     constructor(
@@ -23,19 +25,12 @@ export class UserResolver {
                 confirmPassword: "Password and confirm password are not the same",
             })
         }
-        try {
-            const { user } = await this.authService.register(
-                registerDto,
-                context.res
-            );
-            return { user };
-        } catch (error) {
-            return {
-                error: {
-                    message: error.message
-                }
-            }
-        }
+        const { user } = await this.authService.register(
+            registerDto,
+            context.res
+        );
+        return { user };
+
     }
 
     @Mutation(() => LoginResponse)
@@ -43,12 +38,13 @@ export class UserResolver {
         @Args('loginInput') loginDto: LoginDto,
         @Context() Context: { res: Response }
     ) {
-        return this.authService.login(loginDto, Context.res)
+        const user = await this.authService.login(loginDto, Context.res)
+        return user;
     }
 
     @Mutation(() => String)
     async logout(@Context() context: { res: Response }) {
-      return this.authService.logout(context.res);
+        return this.authService.logout(context.res);
     }
 
     @Mutation(() => String)

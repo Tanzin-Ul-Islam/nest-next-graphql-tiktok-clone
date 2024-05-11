@@ -61,13 +61,13 @@ export class AuthService {
             where: { email: registerDto.email }
         })
         if (existingUser) {
-            throw new Error("Email already in use.")
+            throw new BadRequestException({ email: "Email already in use." })
         }
         const hashedPassword = await hashPassword(registerDto.password);
         const user = await this.prisma.user.create({
             data: {
                 fullname: registerDto.fullname,
-                password: registerDto.password,
+                password: hashedPassword,
                 email: registerDto.email,
             }
         })
@@ -77,7 +77,7 @@ export class AuthService {
     async login(loginDto: LoginDto, res: Response) {
         const user = await this.validateUser(loginDto);
         if (!user) {
-            throw new UnauthorizedException('Invalid credentials.')
+            throw new BadRequestException({ invalidCredentials: 'Invalid credentials!' })
         }
         return this.issueTokens(user, res)
     }

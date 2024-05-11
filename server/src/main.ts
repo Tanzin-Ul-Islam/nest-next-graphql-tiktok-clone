@@ -4,16 +4,21 @@ import * as cookieParser from 'cookie-parser'
 import { BadRequestException, ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // app.enableCors({
+  //   origin: true,
+  //   methods: '*',
+  //   credentials: true,
+  //   allowedHeaders: [
+  //     'Accept',
+  //     'Authorization',
+  //     'X-Requested-with',
+  //     'apollo-require-preflight',
+  //   ]
+  // });
   app.enableCors({
     origin: true,
     methods: '*',
     credentials: true,
-    allowedHeaders: [
-      'Accept',
-      'Authorization',
-      'X-Requested-with',
-      'apollo-require-preflight',
-    ]
   });
   app.use(cookieParser());
   app.useGlobalPipes(
