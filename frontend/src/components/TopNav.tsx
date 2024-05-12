@@ -79,59 +79,63 @@ export default function TopNav() {
                             </span>
                         </Link>
                     )}
-                    {!user.id && (
+                    {!user.id ? (
                         <div className="flex items-center">
                             <button
-                                onClick={() => setLoginIsOpen(!isLoginOpen)}
+                                onClick={() => setLoginIsOpen(true)}
                                 className="flex items-center bg-[#F02C56] text-white border rounded-md px-3 py-[6px] min-w-[110px]"
                             >
                                 <span className="mx-4 font-medium text-[15px]">Log In</span>
                             </button>
                             <BsThreeDotsVertical size="25" color="#161724" />
                         </div>
-                    )}
-                    <div className="flex items-center">
-                        <BsFillSendFill size="25" color="#161724" />
-                        <BiMessageDetail size="25" color="#161724" />
-                        <div className="relative">
-                            <button className="mt-1" onClick={() => setShowMenu(!showMenu)}>
-                                <img
-                                    className="rounded-full"
-                                    width="33"
-                                    src={
-                                        !user.image
-                                            ? "https://picsum.photos/id/83/300/320"
-                                            : user.image
-                                    }
-                                />
-                            </button>
-                            {showMenu && (
-                                <div
-                                    id="PopupMenu"
-                                    className="absolute bg-white rounded-lg py-1.5 w-[200px] shadow-xl border top-[43px] -right-2"
-                                >
-                                    <Link
-                                        onClick={() => setShowMenu(!showMenu)}
-                                        to={"/profile/" + user.id}
-                                        className="flex flex-col px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-                                    >
-                                        {" "}
-                                        <BsFillPersonFill size="20" color="#161724" />
-                                        <span className="font-semibold text-sm">Profile</span>
-                                    </Link>
-                                    {user.id && (
+                    ) :
+                        (
+                            <div className="flex items-center">
+                                <BsFillSendFill size="25" color="#161724" />
+                                <BiMessageDetail size="25" color="#161724" />
+                                <div className="relative">
+                                    <button className="mt-1" onClick={() => setShowMenu(!showMenu)}>
+                                        <img
+                                            className="rounded-full"
+                                            width="33"
+                                            src={
+                                                !user.image
+                                                    ? "https://picsum.photos/id/83/300/320"
+                                                    : user.image
+                                            }
+                                        />
+                                    </button>
+                                    {showMenu && (
                                         <div
-                                            onClick={handleLogout}
-                                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            id="PopupMenu"
+                                            className="absolute bg-white rounded-lg py-1.5 w-[200px] shadow-xl border top-[43px] -right-2"
                                         >
-                                            <GrLogout size="20" color="#161724" />
-                                            <span className=" font-semibold text-sm">Log out</span>
+                                            <Link
+                                                onClick={() => setShowMenu(!showMenu)}
+                                                to={"/profile/" + user.id}
+                                                className="flex flex-col px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                            >
+                                                {" "}
+                                                <BsFillPersonFill size="20" color="#161724" />
+                                                <span className="font-semibold text-sm">Profile</span>
+                                            </Link>
+                                            {user.id && (
+                                                <div
+                                                    onClick={handleLogout}
+                                                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                                                >
+                                                    <GrLogout size="20" color="#161724" />
+                                                    <span className=" font-semibold text-sm">Log out</span>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>
-                            )}
-                        </div>
-                    </div>
+                            </div>
+                        )
+                    }
+
                 </div>
             </div>
         </div>
