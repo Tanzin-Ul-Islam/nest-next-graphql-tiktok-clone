@@ -16,6 +16,7 @@ const documents = {
     "\nmutation LoginUser($email: String!, $password: String!) {\n    login(loginInput: {email: $email, password: $password}) {\n        user{\n            email\n            id\n            fullname\n        }\n    }\n}": types.LoginUserDocument,
     "\n  mutation LogoutUser {\n    logout\n  }\n": types.LogoutUserDocument,
     "\nmutation RegisterUser($fullname: String!, $email: String!, $password: String!, $confirmPassword: String!) {\n    register(registerInput: {fullname: $fullname, email: $email, password: $password, confirmPassword: $confirmPassword}) {\n        user{\n            email\n            id\n            fullname\n        }\n    }\n}": types.RegisterUserDocument,
+    "\n    query GerUsers {\n        getUsers{\n            id\n            fullname\n            email\n            image\n        }\n    }\n": types.GerUsersDocument,
 };
 
 /**
@@ -44,6 +45,10 @@ export function graphql(source: "\n  mutation LogoutUser {\n    logout\n  }\n"):
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\nmutation RegisterUser($fullname: String!, $email: String!, $password: String!, $confirmPassword: String!) {\n    register(registerInput: {fullname: $fullname, email: $email, password: $password, confirmPassword: $confirmPassword}) {\n        user{\n            email\n            id\n            fullname\n        }\n    }\n}"): (typeof documents)["\nmutation RegisterUser($fullname: String!, $email: String!, $password: String!, $confirmPassword: String!) {\n    register(registerInput: {fullname: $fullname, email: $email, password: $password, confirmPassword: $confirmPassword}) {\n        user{\n            email\n            id\n            fullname\n        }\n    }\n}"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n    query GerUsers {\n        getUsers{\n            id\n            fullname\n            email\n            image\n        }\n    }\n"): (typeof documents)["\n    query GerUsers {\n        getUsers{\n            id\n            fullname\n            email\n            image\n        }\n    }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
