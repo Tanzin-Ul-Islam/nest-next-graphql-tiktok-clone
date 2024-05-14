@@ -32,16 +32,15 @@ export default function TopNav() {
         >
             <div
                 className={[
-                    location.pathname == "/" ? "max-w-[1150px]" : "",
-                    "flex items-center justify-between w-full px-6 mx-auto",
+                    "max-w-[1150px] flex items-center justify-between w-full px-6 mx-auto",
                 ].join(" ")}
             >
-                <div className={location.pathname == "/" ? "w-[80%]" : "lg:w-[20%] w-[70%]"}>
+                <div className={"w-[80%]"}>
                     <Link to="/">
                         <img
                             src={tikTokLogo}
-                            width={location.pathname == "/" ? "100" : "50"}
-                            height={location.pathname == "/" ? "100" : "50"}
+                            width={"100"}
+                            height={"100"}
                             alt="logo"
                         />
                     </Link>
@@ -92,9 +91,9 @@ export default function TopNav() {
                     ) :
                         (
                             <div className="flex items-center">
-                                <BsFillSendFill size="25" color="#161724" />
-                                <BiMessageDetail size="25" color="#161724" />
-                                <div className="relative">
+                                <BsFillSendFill className='m-2' size="25" color="#161724" />
+                                <BiMessageDetail className='m-2' size="25" color="#161724" />
+                                <div className="relative m-2">
                                     <button className="mt-1" onClick={() => setShowMenu(!showMenu)}>
                                         <img
                                             className="rounded-full"

@@ -32,7 +32,7 @@ function App() {
           <Route path="/" element={<ProtectedRoutes><Feed /></ProtectedRoutes>}></Route>
           <Route path="/upload" element={<ProtectedRoutes><Upload /></ProtectedRoutes>}></Route>
           <Route path="/post" element={<ProtectedRoutes><Post /></ProtectedRoutes>}></Route>
-          <Route path="/profile" element={<ProtectedRoutes><Profile /></ProtectedRoutes>}></Route>
+          <Route path="/profile/:id" element={<ProtectedRoutes><Profile /></ProtectedRoutes>}></Route>
         </Routes>
         <AuthModal />
       </MainLayout>
