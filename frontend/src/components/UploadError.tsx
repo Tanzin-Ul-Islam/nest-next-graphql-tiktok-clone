@@ -18,15 +18,16 @@ export default function UploadError({ errorType }: { errorType: string | null })
         }
     }, [errorType, error])
     return (
-        <div className="w-[100%] relative flex justify-center">
-            <div
-                className={[
-                    "absolute top-6 z-50 mx-auto bg-black text-white bg-opacity-70 px-14 py-3 rounded-sm",
-                    errorType ? "visible" : "invisible",
-                ].join(" ")}
-            >
-                {error}
-            </div>
-        </div>
+        // <div className="w-[100%] relative flex justify-center">
+        //     <div
+        //         className={[
+        //             "absolute top-6 z-50 mx-auto bg-black text-white bg-opacity-70 px-14 py-3 rounded-sm",
+        //             errorType ? "visible" : "invisible",
+        //         ].join(" ")}
+        //     >
+        //         {error}
+        //     </div>
+        // </div>
+        <>{error}</>
     )
 }

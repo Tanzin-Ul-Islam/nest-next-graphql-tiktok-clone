@@ -10,14 +10,14 @@ export default function MenuItemFollow({ user }: any) {
             />
             <div className="lg:pl-2.5 lg:block hidden">
                 <div className="flex items-center">
-                    <div className="font-bold text-[14px]">User name</div>
+                    <div className="font-bold text-[14px]">{user.fullname}</div>
                     <div className="ml-1 rounded-full bg-[#58D5EC] h-[14px] relative ">
                         <AiOutlineCheck className="relative" color="#FFFFFF" size="15" />
                     </div>
                 </div>
-                <div className="font-light text-[12px] text-gray-600">
+                {/* <div className="font-light text-[12px] text-gray-600">
                     {user?.fullname}
-                </div>
+                </div> */}
             </div>
         </div>
     )
