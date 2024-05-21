@@ -68,4 +68,31 @@ export class PostService {
             throw new NotFoundException(error.message);
         }
     }
+
+    async getPosts(skip: number, take: number): Promise<PostType[]> {
+        return await this.prismaService.post.findMany({
+            skip,
+            take,
+            include: { user: true, likes: true, comments: true },
+            orderBy: { createdAt: 'desc' }
+        })
+    }
+
+    async getPostsByUserId(userId: number): Promise<PostType[]> {
+        return await this.prismaService.post.findMany({
+            where: { userId },
+            include: { user: true }
+        })
+    }
+
+    async deletePost(id: number): Promise<void> {
+        const post = await this.getPostById(id);
+        try {
+            const fs = await import('fs');
+            fs.unlinkSync(`public${post.video}`);
+            await this.prismaService.post.delete({ where: { id } });
+        } catch (error) {
+            throw new NotFoundException(error.message);
+        }
+    }
 }
