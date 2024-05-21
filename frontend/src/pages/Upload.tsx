@@ -162,7 +162,7 @@ export default function Upload() {
                   </div>
                 </div>
                 <div className="mt-4 mb-6">
-                  <div className="flex bg-[#F8F8F8] py-4 px-6">
+                  {/* <div className="flex bg-[#F8F8F8] py-4 px-6">
                     <GiBoxCutter className="mr-4" size="20" />
                     <div>
                       <div className="text-semibold text-[15px] mb-1.5">
@@ -178,7 +178,7 @@ export default function Upload() {
                         Edit
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="mt-5">
                     <div className="flex items-center justify-between">
                       <div className="mb-1 text-[15px]">Caption</div>

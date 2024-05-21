@@ -20,7 +20,7 @@ export class PostType {
     user: User;
 
     @Field(() => [LikeType], { nullable: true })
-    likes?: LikeType
+    likes?: LikeType[];
 }
 
 @ObjectType()
