@@ -90,9 +90,10 @@ export class PostService {
         try {
             const fs = await import('fs');
             fs.unlinkSync(`public${post.video}`);
-            await this.prismaService.post.delete({ where: { id } });
+
         } catch (error) {
             throw new NotFoundException(error.message);
         }
+        await this.prismaService.post.delete({ where: { id } });
     }
 }
