@@ -18,6 +18,7 @@ export class GraphqlAuthGuard implements CanActivate {
         }
         try {
             const payload = await this.jwtService.decodeAccessToken(token);
+            console.log("payload", payload)
             request['user'] = payload;
 
         } catch (error) {

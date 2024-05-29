@@ -36,6 +36,16 @@ type Mutation {
   register(registerInput: RegisterDto!): RegisterResponse!
 }
 
+type PostDetails {
+  createAt: DateTime!
+  id: Float!
+  likes: [LikeType!]
+  otherPostIds: [Float!]
+  text: String!
+  user: User!
+  video: String!
+}
+
 type PostType {
   createAt: DateTime!
   id: Float!
@@ -46,6 +56,8 @@ type PostType {
 }
 
 type Query {
+  getPostById(id: Float!): PostDetails!
+  getPosts(skip: Int! = 0, take: Int! = 1): [PostType!]!
   getUsers: [User!]!
   hello: String!
 }
